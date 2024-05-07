@@ -1,0 +1,29 @@
+<div class="header__wrapper">
+  <header></header>
+  <div class="cols__container">
+    <div class="left__col" *ngIf="clientData">
+      <div class="img__container">
+        <img src="../../assets/pic/account.png" alt="Anna Smith" />
+        <span></span>
+      </div>
+      <h2>{{ clientData.login }}</h2>
+      <p>Астролог</p>
+      <p>{{ clientData.name }}</p>
+      <ul class="about">
+        <li><span>4,073</span>Followers</li>
+        <li><span>322</span>Following</li>
+        <li><span>200,543</span>Attraction</li>
+      </ul>
+      <div class="content">
+        <p>
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam
+          erat volutpat. Morbi imperdiet, mauris ac auctor dictum, nisl
+          ligula egestas nulla.
+        </p>
+      </div>
+    </div>
+    <div class="right__col">
+      <app-orders-client></app-orders-client>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<main>
+  <h1 class="question-title">Какой вопрос вас интересует?</h1>
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="Например индивидуальный гороскоп на год" name="description" [(ngModel)]="task.description">
+    <button type="submit" class="search-btn">Далее</button>
+  </form>
+</main>
+
+

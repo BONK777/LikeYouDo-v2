@@ -1,0 +1,14 @@
+<main>
+    <h1>Categories:</h1>
+    <ul class="content">
+      <li class="card" *ngFor="let category of categories" (click)="showSubcategories(category.id)">
+        <div class="info-card"> 
+          <h3>{{ category.name }}</h3>
+          <a>{{ category.description }}</a>
+        </div>
+        <button class="btn-card">Больше</button>
+      </li>
+    </ul>
+</main>
+
+<router-outlet></router-outlet>
