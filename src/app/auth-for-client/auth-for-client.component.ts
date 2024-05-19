@@ -28,7 +28,7 @@ export class AuthForClientComponent implements OnInit {
         const accessKey = response; 
         this.authService.setClientAccessKey(accessKey);
         this.authService.setClientData(formData);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/profile-client']);
     },
     (error: any) => {
         console.error('Ошибка при авторизации:', error);

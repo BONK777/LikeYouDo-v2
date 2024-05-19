@@ -16,15 +16,21 @@ export class ProfilePerformerComponent implements OnInit {
 
 
   ngOnInit() {
-    this.authService.performerData$.subscribe((data) => {
-      this.performerData = data;
-    });
+    this.authService.validatePerformer(this.authService.getPerformerAccessKey()).subscribe((data) => {
+      console.log('got data')
+      console.log(data)
+      this.performerData = {
+        name: data.name,
+        login: data.login
+      };
+    }, (error) => console.log('error'));
     this.loadTasks();
   }
 
   tasks: any[] = [];  
 
   loadTasks() {
+    console.log("start load")
     this.authService.getTasks().subscribe(
       (tasks) => {
         this.tasks = tasks;  

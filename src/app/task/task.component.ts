@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   template: `
   <div class="client-data-container">
     <div class="tasks-container">
-      <div class="task-card" (click)="toggleClientInfo()" [@fadeInUp]>
+      <div class="task-card" (click)="toggleClientInfo()">
         <div class="task-info">
           <h2>{{ task?.data?.description }}</h2>
           <p><strong>Подкатегория:</strong> {{ task?.data?.subcategory }}</p>

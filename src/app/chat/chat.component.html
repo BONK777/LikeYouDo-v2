@@ -1,15 +1,35 @@
 <main>
   <div class="chat-container">
     <div class="messages">
-      <div *ngFor="let message of messages" class="message">
-        <span>{{ message.text }}</span>
+      <div class="chat-header">
+        <button (click)="fetchMessages()"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="#ffffff" d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 0 0-8 8a8 8 0 0 0 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18a6 6 0 0 1-6-6a6 6 0 0 1 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"/></svg></button>
+        <span>{{ opponentName }}</span>
+      </div>
+      <div class="messages-block">
+        <div *ngFor="let message of messages" class="message">
+          <span [ngClass]="{'message-left': message.sender != opponentId, 'message-right': message.sender == opponentId}">{{ message.text }}</span>
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="loading-modal">
+        Загрузка...
       </div>
     </div>
     <div class="input-container">
-      <input [(ngModel)]="newMessage" placeholder="Введите сообщение..." />
+      <textarea [(ngModel)]="newMessage"></textarea>
       <button (click)="sendMessage()">Отправить</button>
-      <button (click)="fetchMessages()">Получить</button>
-      <button (click)="endChat()">Завершить</button>
+      <button *ngIf="role=='performer'" (click)="suringToEndChat()">Завершить</button>
     </div>  
+  </div>
+  <div *ngIf="(role=='performer') && tryingToEnd" class="ending-modal-bg">
+    <div class="ending-modal">
+      <button class="close-modal" (click)="closeSuringModal()">X</button>
+      <span class="end-suring-text">
+        Вы хотите завершить задачу с этим клиентом. Ваш финальный ответ:
+      </span>
+      <span class="suring-final-answer">
+        {{ newMessage }}
+      </span>
+      <button class="end-chat" (click)="endChat()">Завершить</button>
+    </div>
   </div>
 </main>

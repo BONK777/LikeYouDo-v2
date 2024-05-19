@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 export class OrdersClientComponent implements OnInit {
   clientData: any;
   accKey!: string;
+  canCreateNew: boolean = false;
 
   constructor(private dataService: DataService, private router: Router) {}
 
@@ -34,7 +35,21 @@ export class OrdersClientComponent implements OnInit {
     const accKey = this.dataService.getClientAccessKey();
     this.dataService.validateClient(accKey).subscribe(
       (response) => {
+        let canCreateNew = true;
+        for (const task of response.tasks) {
+          canCreateNew = canCreateNew && task.data.answer != null;
+          if (task.data.performer != '0') {
+            this.dataService.getPerformerById(task.data.performer).subscribe(perfData => {
+              task.data.performer = {
+                id: task.data.performer,
+                data: perfData
+              };
+            })
+          }
+        }
+        this.canCreateNew = canCreateNew;
         this.clientData = response;
+        this.clientData.tasks.reverse();
       },
       (error) => {
         console.error('Ошибка при получении данных:', error);
@@ -77,13 +92,17 @@ export class OrdersClientComponent implements OnInit {
     this.dataService.choosePerformer(performerId, taskId).subscribe(
       (response) => {
         console.log('Исполнитель успешно выбран:', response);
-        localStorage.setItem('taskId', taskId);
-        localStorage.setItem('userRole', 'client');
-        this.router.navigate(['/chat']);
+        this.openChat(taskId);
       },
       (error) => {
         console.error('Ошибка при выборе исполнителя:', error);
       }
     );
+  }
+
+  openChat(taskId: string) {
+    localStorage.setItem('taskId', taskId);
+    localStorage.setItem('userRole', 'client');
+    this.router.navigate(['/chat']);
   }
 }

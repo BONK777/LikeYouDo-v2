@@ -13,8 +13,14 @@ export class ProfileClientComponent implements OnInit {
   constructor(private authService: DataService) { }
 
   ngOnInit() {
-    this.authService.clientData$.subscribe((data) => {
-      this.clientData = data; 
-    });
+    const accKey = this.authService.getClientAccessKey();
+    this.authService.validateClient(accKey).subscribe(
+      (response) => {
+        this.clientData = response
+      },
+      (error) => {
+        console.error("Ошибка при получении данных", error)
+      }
+    )
   }
 }

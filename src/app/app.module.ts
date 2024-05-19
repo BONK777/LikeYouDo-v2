@@ -40,6 +40,7 @@ import { ActiveTaskComponent } from './active-task/active-task.component';
 
 
 const routes: Routes = [
+  {path: "", component: HomeComponent},
   {path: "home", component: HomeComponent},
   {path: "auth-client", component: AuthForClientComponent},
   {path: "auth-performer", component: AuthForPerformerComponent},

@@ -61,6 +61,10 @@ textarea {
   transition: .3s;
 }
 
+.error-message {
+  color: red;
+}
+
 .submit:hover {
   background-color: #37af65b3;
 }

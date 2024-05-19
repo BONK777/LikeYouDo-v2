@@ -46,7 +46,6 @@
 
       private taskId: string | null = null;
 
-
         setSelectedType(type: string) {
           this.selectedTypeSubject.next(type);
         }
@@ -107,17 +106,22 @@
         }
 
         setClientAccessKey(key: string): void {
-          this.clientAccessKey = key;
+          localStorage.setItem("acckey", key);
           console.log('Установлен токен:', key);
         }
 
         getClientAccessKey(): string {
-          return this.clientAccessKey;
+          return localStorage.getItem("acckey") ?? "";
         }
 
         setPerformerAccessKey(accessKey: string): void {
-          this.performerAccessKey = accessKey;
+          // this.performerAccessKey = accessKey;
+          localStorage.setItem("acckey", accessKey);
           console.log('Установлен токен:', accessKey);
+        }
+
+        setSelfId(id: string): void {
+          
         }
 
         setTaskId(taskId: string): void {
@@ -130,12 +134,13 @@
         }
         
         getPerformerAccessKey(): string {
-          const key = this.performerAccessKey;
-          if (!key) {
-            console.error('Токен авторизованного пользователя отсутствует.');
-          }
-          console.log('Токен авторизованного пользователя:', key);
-          return key;
+          // const key = this.performerAccessKey;
+          // if (!key) {
+          //   console.error('Токен авторизованного пользователя отсутствует.');
+          // }
+          // console.log('Токен авторизованного пользователя:', key);
+          // return key;
+          return localStorage.getItem("acckey") ?? "";
         }      
         
         saveTaskToDatabase(task: Task): Observable<Task> {
@@ -144,6 +149,10 @@
           const options = { headers: headers };
           console.log('отправляем:', task);
           return this.http.post<Task>(`${this.apiUrl}/task`, task, options);
+        }
+
+        getTask(id: string): Observable<any> {
+          return this.http.get<any>(`${this.apiUrl}/task/byid?taskId=${id}`);
         }
 
         getTasks(): Observable<any[]> {
@@ -182,7 +191,7 @@
         }
 
         getPerformerById(performerId: string): Observable<any> {
-          return this.http.get<any>(`${this.apiUrl}/performerById?id=${performerId}`);
+          return this.http.get<any>(`${this.apiUrl}/performer/byid?id=${performerId}`);
         }
 
         getPerformerTasks(): Observable<any[]> {

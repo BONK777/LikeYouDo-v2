@@ -9,32 +9,21 @@
       <h2>{{ performerData.login }}</h2>
       <p>Астролог</p>
       <p>{{ performerData.name }}</p>
-      <ul class="about">
-        <li><span>4,073</span>Followers</li>
-        <li><span>322</span>Following</li>
-        <li><span>200,543</span>Attraction</li>
-      </ul>
-      <div class="content">
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam
-          erat volutpat. Morbi imperdiet, mauris ac auctor dictum, nisl
-          ligula egestas nulla.
-        </p>
+    </div>
+    <div>
+      <div>
+        <ul class="tabs">
+          <li class="tab" (click)="selectedComponent = 'tasks'">Задачи</li>
+          <li class="tab" (click)="selectedComponent = 'active-task'">Активная задача</li>
+        </ul>
+      </div>
+      <div class="tasks" *ngIf="selectedComponent === 'tasks'">
+        <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+      </div>
+      <div *ngIf="selectedComponent === 'active-task'">
+        <app-active-task></app-active-task>
       </div>
     </div>
-    <div class="right__col">
-      <ul class="tabs">
-        <li class="tab" (click)="selectedComponent = 'tasks'">Задачи</li>
-        <li class="tab" (click)="selectedComponent = 'active-task'">Активная задача</li>
-      </ul>
-    
-        <div *ngIf="selectedComponent === 'tasks'">
-          <app-task *ngFor="let task of tasks" [task]="task"></app-task>
-        </div>
-        <div *ngIf="selectedComponent === 'active-task'">
-          <app-active-task></app-active-task>
-        </div>
-      </div>
     
   </div>
 </div>

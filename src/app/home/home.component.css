@@ -78,6 +78,18 @@ input, button {
     font-size: 15px;
 }
 
+.performer-btn {
+    border-radius: 10px;
+    background: #000000AA;
+    margin-top: 100px;
+    height: 40px;
+}
+.performer-btn > a {
+    font-size: 15px;
+    padding: 20px;
+    color: rgb(0, 170, 255);
+}
+
 @media only screen and (max-width : 400px)  {
     .modal-title {
         font-size: 7vw;
