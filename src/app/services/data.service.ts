@@ -62,6 +62,10 @@
           return this.selectedSubcategory;
         }
 
+        adminEnter(token: string) {
+          return this.http.get(`${this.apiUrl}/admin/enter?token=${token}`)
+        }
+
         registerClient(data: {name: string, login: string, password: string }): Observable<any> {
           console.log('Данные перед отправкой:', data);
           return this.http.post(`${this.apiUrl}/regClient`, data);
@@ -91,6 +95,32 @@
 
         getCategories(): Observable<any[]> {
           return this.http.get<any[]>(`${this.apiUrl}/categories`);
+        }
+
+        createCategory(body: {data: {name: string, description: string, image: string}, token: string}): Observable<string> {
+          return this.http.post<string>(`${this.apiUrl}/category`, body);
+        }
+
+        createSubcategory(body: {data: {name: string, description: string, image: string, category: string}, token: string}): Observable<string> {
+          return this.http.post<string>(`${this.apiUrl}/subcategory`, body);
+        }
+
+        deleteCategory(adminToken: string, categoryId: string): Observable<any> {
+          return this.http.delete<any>(`${this.apiUrl}/category`, {
+            body: {
+              token: adminToken,
+              id: categoryId
+            }
+          });
+        }
+
+        deleteSubcategory(adminToken: string, subcategoryId: string): Observable<any> {
+          return this.http.delete<any>(`${this.apiUrl}/subcategory`, {
+            body: {
+              token: adminToken,
+              id: subcategoryId
+            }
+          });
         }
       
         getSubcategories(categoryId: string): Observable<any[]> {

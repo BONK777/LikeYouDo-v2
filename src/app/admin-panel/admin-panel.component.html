@@ -1,0 +1,103 @@
+<main>
+    <div *ngIf="adminToken != null; else regAdmin">
+        <div *ngIf="categories; else nullCategories" class="categories-container">
+            <button (click)="openCreatingModal()" class="add">Добавить категорию</button>
+            <div class="categories">
+                <div *ngFor="let category of categories" class="category">
+                    <div class="category-info">
+                        <img width="150px" src="{{ category.image }}">
+                        <div class="category-info-name">{{ category.name }}</div>
+                        <div class="category-info-description">{{ category.description }}</div>
+                    </div>
+                    <div class="category-options">
+                        <button (click)="showSubcategories(category)" class="edit">Подкатегории</button>
+                        <button (click)="deleteCategory(category.id)" class="delete">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #nullCategories>
+            Загрузка...
+        </ng-template>
+    </div>
+    <ng-template #regAdmin>
+        <div *ngIf="triedLogin">
+            Введите токен:
+            <input [(ngModel)]="regToken" type="text" class="form-control">
+            <button (click)="loginAdmin()">Войти</button>
+        </div>
+    </ng-template>
+</main>
+
+<div (click)="closeCreatingModal()" *ngIf="creatingModal" class="modal">
+    <div (click)="$event.stopPropagation()" class="modal-content">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Название</span>
+            </div>
+            <input [(ngModel)]="newCategory.name" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Описание</span>
+            </div>
+            <input [(ngModel)]="newCategory.description" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Изображение</span>
+            </div>
+            <input [(ngModel)]="newCategory.image" type="text" class="form-control" placeholder="Ссылка (https://address.com/image.png)">
+        </div>
+        <button (click)="createNewCategory()" class="add">Готово</button>
+    </div>
+</div>
+
+<div (click)="closeSubcategories()" *ngIf="categoryToEdit != null" class="modal">
+    <div (click)="$event.stopPropagation()" class="modal-content">
+        <h2 *ngIf="!subcategoryAdding; else subcategoryAddingH2">Редактирование категории <b>"{{ categoryToEdit.name }}"</b></h2>
+        <ng-template #subcategoryAddingH2>
+            <h2>Добавление подкатегории в категорию <b>"{{ categoryToEdit.name }}"</b></h2>
+        </ng-template>
+        <div class="subcategory-adding-container">
+            <button (click)="toggleSubcategoryAdding()" *ngIf="!subcategoryAdding" class="add">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e8eaed"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    Добавить подкатегорию
+            </button>
+            <div *ngIf="subcategoryAdding" class="subcategory-adding">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Название</span>
+                    </div>
+                    <input [(ngModel)]="newSubcategory.name" type="text" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Описание</span>
+                    </div>
+                    <input [(ngModel)]="newSubcategory.description" type="text" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Изображение</span>
+                    </div>
+                    <input [(ngModel)]="newSubcategory.image" type="text" class="form-control" placeholder="Ссылка (https://address.com/image.png)">
+                </div>
+                <div class="buttons-container">
+                    <button (click)="createNewSubcategory()" class="add">Готово</button>
+                    <button (click)="toggleSubcategoryAdding()" class="edit big">Закрыть</button>
+                </div>
+            </div>
+        </div>
+        <div class="subcategories-container" *ngIf="!subcategoryAdding">
+            <div *ngFor="let subcategory of categoryToEdit.subcategories" class="subcategory">
+                <div class="image-container">
+                    <img width="100px" src="{{ subcategory.image }}">
+                </div>
+                <div><b>Название:</b> {{ subcategory.name }}</div>
+                <div><b>Описание:</b> {{ subcategory.description }}</div>
+                <button (click)="deleteSubcategory(subcategory.id)" class="delete">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>

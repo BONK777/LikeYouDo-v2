@@ -35,6 +35,7 @@ import { ProfileClientComponent } from './profile-client/profile-client.componen
 import { OrdersClientComponent } from './orders-client/orders-client.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { ActiveTaskComponent } from './active-task/active-task.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 
@@ -65,6 +66,7 @@ const routes: Routes = [
   {path: "select-performer", component: SelectPerformerComponent},
   {path: "chat", component: ChatComponent},
   // {path: "order", component: OrderComponent},
+  {path: "admin-panel", component: AdminPanelComponent},
   {path: "**", component: ErrComponent}
   // { path: '', redirectTo: '/categories', pathMatch: 'full' }
 ]
@@ -99,7 +101,8 @@ const routes: Routes = [
       ChatComponent,
       ProfileClientComponent,
       OrdersClientComponent,
-      ActiveTaskComponent
+      ActiveTaskComponent,
+      AdminPanelComponent
    ],
   imports: [
     BrowserModule,
