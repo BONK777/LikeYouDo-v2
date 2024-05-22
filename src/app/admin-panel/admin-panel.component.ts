@@ -12,7 +12,7 @@ export class AdminPanelComponent {
   newSubcategory: {name: string, description: string, image: string} = {name: "", description: "", image: ""}
   categories: any[] | null = null;
   creatingModal: boolean = false;
-  adminToken: string | null = null;
+  adminToken: string = "";
   triedLogin: boolean = false;
   regToken: string = "";
   categoryToEdit: any | null = null;
@@ -35,6 +35,7 @@ export class AdminPanelComponent {
     this.dataService.adminEnter(this.regToken).subscribe((_) => {
       this.adminToken = this.regToken;
       localStorage.setItem('admintoken', this.regToken);
+      this.fetchCategories();
     }, (error) => console.log(error));
   }
   

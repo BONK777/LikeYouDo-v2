@@ -1,5 +1,5 @@
-<main>
-    <div *ngIf="adminToken != null; else regAdmin">
+<main class="container">
+    <div *ngIf="adminToken != ''; else regAdmin">
         <div *ngIf="categories; else nullCategories" class="categories-container">
             <button (click)="openCreatingModal()" class="add">Добавить категорию</button>
             <div class="categories">
@@ -21,10 +21,10 @@
         </ng-template>
     </div>
     <ng-template #regAdmin>
-        <div *ngIf="triedLogin">
-            Введите токен:
-            <input [(ngModel)]="regToken" type="text" class="form-control">
-            <button (click)="loginAdmin()">Войти</button>
+        <div class="row row-cols-1">
+            <div class="col mt-1">Введите токен:</div>
+            <input [(ngModel)]="regToken" type="text" class="form-control col mt-3" placeholder="Токен администратора">
+            <button class="add col mt-3" (click)="loginAdmin()">Войти</button>
         </div>
     </ng-template>
 </main>
